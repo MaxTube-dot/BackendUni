@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Backend.DAL.Models
 {
-    public class Mark
+    public class Like
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public User User { get; set; }
 
-        public string ImageLink { get; set; }
-
-        public List<Task> Tasks { get; set; }
+        public Task Task { get; set; }
     }
 }

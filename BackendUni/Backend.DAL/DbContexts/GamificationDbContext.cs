@@ -13,6 +13,8 @@ namespace Backend.DAL.DbContexts
 
         public DbSet<Mark> Marks { get; set; }
 
+        public DbSet<Like> Likes { get; set; }
+
         public GamificationDbContext(DbContextOptions<GamificationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
@@ -27,6 +29,7 @@ namespace Backend.DAL.DbContexts
             modelBuilder.Entity<Models.Task>()
                 .HasMany(x => x.TargetUsers)
                 .WithMany(x => x.Tasks);
+
         }
     }
 }
