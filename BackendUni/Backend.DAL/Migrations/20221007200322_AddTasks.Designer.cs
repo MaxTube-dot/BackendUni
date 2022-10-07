@@ -3,6 +3,7 @@ using System;
 using Backend.DAL.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.DAL.Migrations
 {
     [DbContext(typeof(GamificationDbContext))]
-    partial class GamificationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221007200322_AddTasks")]
+    partial class AddTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,9 +81,6 @@ namespace Backend.DAL.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ImageLink")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -121,26 +120,16 @@ namespace Backend.DAL.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
+                    b.HasIndex("TaskId");
+
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TaskUser", b =>
-                {
-                    b.Property<int>("TargetUsersId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TasksId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TargetUsersId", "TasksId");
-
-                    b.HasIndex("TasksId");
-
-                    b.ToTable("TaskUser");
                 });
 
             modelBuilder.Entity("Backend.DAL.Models.Mark", b =>
@@ -153,7 +142,7 @@ namespace Backend.DAL.Migrations
             modelBuilder.Entity("Backend.DAL.Models.Task", b =>
                 {
                     b.HasOne("Backend.DAL.Models.User", "Creator")
-                        .WithMany("CreatedTasks")
+                        .WithMany()
                         .HasForeignKey("CreatorId");
 
                     b.Navigation("Creator");
@@ -165,32 +154,18 @@ namespace Backend.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId");
 
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("TaskUser", b =>
-                {
-                    b.HasOne("Backend.DAL.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("TargetUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Backend.DAL.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("TargetUsers")
+                        .HasForeignKey("TaskId");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Backend.DAL.Models.Task", b =>
                 {
                     b.Navigation("Marks");
-                });
 
-            modelBuilder.Entity("Backend.DAL.Models.User", b =>
-                {
-                    b.Navigation("CreatedTasks");
+                    b.Navigation("TargetUsers");
                 });
 #pragma warning restore 612, 618
         }

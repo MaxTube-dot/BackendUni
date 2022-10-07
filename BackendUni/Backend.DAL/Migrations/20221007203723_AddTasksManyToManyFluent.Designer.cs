@@ -3,6 +3,7 @@ using System;
 using Backend.DAL.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.DAL.Migrations
 {
     [DbContext(typeof(GamificationDbContext))]
-    partial class GamificationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221007203723_AddTasksManyToManyFluent")]
+    partial class AddTasksManyToManyFluent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,15 +132,15 @@ namespace Backend.DAL.Migrations
 
             modelBuilder.Entity("TaskUser", b =>
                 {
-                    b.Property<int>("TargetUsersId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("TasksId")
                         .HasColumnType("integer");
 
-                    b.HasKey("TargetUsersId", "TasksId");
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("TasksId");
+                    b.HasKey("TasksId", "UsersId");
+
+                    b.HasIndex("UsersId");
 
                     b.ToTable("TaskUser");
                 });
@@ -170,15 +172,15 @@ namespace Backend.DAL.Migrations
 
             modelBuilder.Entity("TaskUser", b =>
                 {
-                    b.HasOne("Backend.DAL.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("TargetUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Backend.DAL.Models.Task", null)
                         .WithMany()
                         .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.DAL.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

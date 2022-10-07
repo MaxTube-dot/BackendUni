@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendUni.Controllers
 {
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly GamificationDbContext _db;
 
-        public UserController(GamificationDbContext db)
+        public UsersController(GamificationDbContext db)
         {
             _db = db;
         }

@@ -15,5 +15,9 @@
         public string ImageLink { get; set; }
 
         public Role Role { get; set; }
+
+        public List<Task> Tasks { get; set; }
+
+        public List<Task> CreatedTasks { get; set; }
     }
 }

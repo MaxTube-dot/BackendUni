@@ -9,9 +9,24 @@ namespace Backend.DAL.DbContexts
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<Models.Task> Tasks { get; set; }
+
+        public DbSet<Mark> Marks { get; set; }
+
         public GamificationDbContext(DbContextOptions<GamificationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Models.Task>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedTasks);
+
+            modelBuilder.Entity<Models.Task>()
+                .HasMany(x => x.TargetUsers)
+                .WithMany(x => x.Tasks);
         }
     }
 }
