@@ -1,3 +1,6 @@
+using Backend.DAL.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace BackendUni
 {
     public class Program
@@ -8,6 +11,7 @@ namespace BackendUni
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<GamificationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

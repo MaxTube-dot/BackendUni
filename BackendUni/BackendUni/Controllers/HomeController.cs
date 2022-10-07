@@ -1,4 +1,5 @@
-﻿using BackendUni.Models;
+﻿using Backend.DAL.DbContexts;
+using Backend.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +7,19 @@ namespace BackendUni.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly GamificationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(GamificationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            _db.Users.Add(new User() { Name = "Andrey" });
+            _db.SaveChanges();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Json(_db.Users.ToArray());
         }
     }
 }
