@@ -21,5 +21,19 @@ namespace TestProject2
             }
             Assert.IsTrue(true);
         }
+
+
+        [Test]
+        public void Test2()
+        {
+            var res = WalletApi.GetBalance("0xc732096eC1278f9B5DaAFf3621535fD623E931dd");
+
+            if (res.CoinsAmount > 0)
+            {
+                Assert.IsTrue(true);
+                return;
+            }
+            Assert.IsTrue(false);
+        }
     }
 }

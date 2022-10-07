@@ -6,12 +6,13 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using VtbWallet.Models.Requests;
 using VtbWallet.Models.Responses;
+using System.Security.Cryptography.X509Certificates;
 
 namespace VtbWallet.Helpers
 {
     public class WalletHelper
     {
-        public readonly static string _baseUrl = "https://hackathon.lsp.team/hk";
+        public readonly static string _baseUrl = "https://hackathon.lsp.team/hk/";
 
         private HttpClient CreateHttpClient()
         {
@@ -70,7 +71,12 @@ namespace VtbWallet.Helpers
 
         public CreateWalletResponse CreateWallet()
         {
-            return SendRequest<CreateWalletRequest, CreateWalletResponse>(new CreateWalletRequest(), "/v1/wallets/new", HttpMethod.Post);
+            return SendRequest<CreateWalletRequest, CreateWalletResponse>(new CreateWalletRequest(), "v1/wallets/new", HttpMethod.Post);
+        }
+
+        public GetBalanceResponse GetBalance(string publicKey)
+        {
+            return SendRequest<GetBalanceRequest, GetBalanceResponse>(new GetBalanceRequest(), $"v1/wallets/{publicKey}/balance", HttpMethod.Get);
         }
     }
 }
