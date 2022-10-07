@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Backend.DAL.Models
@@ -19,6 +20,7 @@ namespace Backend.DAL.Models
 
         public string ImageLink { get; set; }
 
+        [JsonIgnore]
         public List<User> TargetUsers { get; set; }
 
         public List<Mark> Marks { get; set; }

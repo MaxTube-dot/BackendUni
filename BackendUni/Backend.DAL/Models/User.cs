@@ -1,4 +1,6 @@
-﻿namespace Backend.DAL.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Backend.DAL.Models
 {
     public class User
     {
@@ -6,8 +8,10 @@
 
         public string Name { get; set; }
 
+        [JsonIgnore]
         public string Login { get; set; }
 
+        [JsonIgnore]
         public string Password { get; set; }
 
         public int Score { get; set; }
