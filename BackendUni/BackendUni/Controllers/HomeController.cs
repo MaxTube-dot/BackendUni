@@ -17,16 +17,14 @@ namespace BackendUni.Controllers
 
         public IActionResult Index()
         {
-            _db.Users.Add(new User() 
-            { 
-                Name = "Andrey",
-                Login = "andrey",
-                Password = "110011"
-            });
-
-            _db.SaveChanges();
-
-            return Json(_db.Users.ToArray());
+            return Content("         \n"+
+"         _    ____ ___   ___ ____   __        _____  ____  _  _____ _   _  ____      \n"+
+"        / \\  |  _ \\_ _| |_ _/ ___|  \\ \\      / / _ \\|  _ \\| |/ /_ _| \\ | |/ ___|     \n"+
+"       / _ \\ | |_) | |   | |\\___ \\   \\ \\ /\\ / / | | | |_) |  / | ||  \\| | |  _      \n"+
+"      / ___ \\|  __/| |   | | ___) |   \\ V  V /| |_| |  _ <| . \\ | || |\\  | |_| |     \n"+
+"     /_/   \\_\\_|  |___| |___|____/     \\_/\\_/  \\___/|_| \\_\\_|\\_\\___|_| \\_|\\____|     \n"+
+"                                                                                     \n"+
+"       ");
         }
 
         
