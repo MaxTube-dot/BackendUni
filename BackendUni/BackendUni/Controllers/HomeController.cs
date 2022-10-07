@@ -28,5 +28,7 @@ namespace BackendUni.Controllers
 
             return Json(_db.Users.ToArray());
         }
+
+        
     }
 }
