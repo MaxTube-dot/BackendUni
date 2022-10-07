@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VtbWallet.Models.Responses;
 
 namespace VtbWallet.Models
 {
@@ -16,9 +17,10 @@ namespace VtbWallet.Models
         public double MaticAmount { get; set; }
 
         public double CoinsAmount { get; set; }
-
-        
-
         #endregion
+
+        public List<History> Histories { get; set; }
+
+        public List<NFT> MyProperty { get; set; }
     }
 }

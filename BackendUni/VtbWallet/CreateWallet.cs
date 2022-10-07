@@ -28,7 +28,9 @@ namespace VtbWallet
         public static Wallet GetBalance(Wallet wallet)
         {
             var result = WalletHelper.GetBalance(wallet.PublicKey);
-            return new Wallet() { MaticAmount = result.MaticAmount, CoinsAmount = result.CoinsAmount };
+            wallet.MaticAmount = result.MaticAmount;
+            wallet.CoinsAmount = result.CoinsAmount;
+            return wallet;
         }
 
         public static TransactionCustom TransfersRuble(string fromPrivateKey, string toPublicKey,double amount)
@@ -63,10 +65,23 @@ namespace VtbWallet
             return result;
         }
 
-        public static List<History> GetHistory(Wallet wallet, int page = 0, int offset = 0, string sort = "asc")
+        public static Wallet GetHistory(Wallet wallet, int page = 0, int offset = 0, string sort = "asc")
         {
             var result = WalletHelper.GetHistory(wallet.PublicKey, page, offset, sort).Histories;
-            return result;
+            wallet.Histories = result;
+            return wallet;
+        }
+
+        public static TransactionCustom GenerateNFT(string publicKey, string uri, int nftCount)
+        {
+            var result = WalletHelper.GenerateNFT(publicKey, uri, nftCount);
+            return new TransactionCustom() { TransactionHash = result.TransactionHash};
+        }
+
+        public static Wallet GenerateNFT(Wallet wallet, string uri, int nftCount)
+        {
+            var result = WalletHelper.GenerateNFT(wallet.PublicKey, uri, nftCount);
+            return wallet;
         }
 
 

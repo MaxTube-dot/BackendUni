@@ -70,5 +70,12 @@ namespace TestProject2
             
             Assert.IsTrue(res.Count > 5);
         }
+
+        [Test]
+        public void Test6()
+        {
+            var res = WalletApi.GenerateNFT("0xc732096eC1278f9B5DaAFf3621535fD623E931dd", Guid.NewGuid().ToString(), 2);
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(res.TransactionHash));
+        }
     }
 }

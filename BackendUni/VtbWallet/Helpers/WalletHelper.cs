@@ -94,5 +94,10 @@ namespace VtbWallet.Helpers
         {
             return SendRequest<GetHistoryRequest, GetHistoryResponse>(new GetHistoryRequest(page, offset, sort), $"v1/wallets/{publicKey}/history", HttpMethod.Post);
         }
+
+        public GenerateNFTResponse GenerateNFT(string publicKey, string uri, int nftCount)
+        {
+            return SendRequest<GenerateNFTRequest, GenerateNFTResponse>(new GenerateNFTRequest(publicKey, uri, nftCount), $"v1/nft/generate", HttpMethod.Post);
+        }
     }
 }
