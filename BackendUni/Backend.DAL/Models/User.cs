@@ -23,5 +23,8 @@ namespace Backend.DAL.Models
         public List<Task> Tasks { get; set; }
 
         public List<Task> CreatedTasks { get; set; }
+
+        [JsonIgnore]
+        public string Token { get; set; }
     }
 }

@@ -32,5 +32,20 @@ namespace BackendUni.Controllers
                 return Json(user.Tasks.ToArray(), options);
             }
         }
+
+        public IActionResult GetAllTasks()
+        {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+            };
+
+            return Json(_db.Tasks.ToArray(), options);
+        }
+
+        public IActionResult Like(int taskId)
+        {
+            return null;
+        }
     }
 }
