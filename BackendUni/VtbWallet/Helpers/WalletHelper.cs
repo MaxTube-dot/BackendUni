@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using VtbWallet.Models.Requests;
 using VtbWallet.Models.Responses;
 using System.Security.Cryptography.X509Certificates;
+using System.Net.Mime;
 
 namespace VtbWallet.Helpers
 {
@@ -27,7 +28,7 @@ namespace VtbWallet.Helpers
                 {
                     Accept =
                     {
-                        new MediaTypeWithQualityHeaderValue("text/plain")
+                        new MediaTypeWithQualityHeaderValue("application/json"),
                     }
                 }
 
@@ -38,7 +39,7 @@ namespace VtbWallet.Helpers
         {
             var request = new HttpRequestMessage(httpMethod, actionType)
             {
-                Content = requestData != null ? new StringContent(JsonConvert.SerializeObject(requestData)) : null
+                Content = requestData != null ? new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json") : null,
             };
 
             using (var client = CreateHttpClient())
@@ -77,6 +78,15 @@ namespace VtbWallet.Helpers
         public GetBalanceResponse GetBalance(string publicKey)
         {
             return SendRequest<GetBalanceRequest, GetBalanceResponse>(new GetBalanceRequest(), $"v1/wallets/{publicKey}/balance", HttpMethod.Get);
+        }     
+        
+        public TransfersRubleResponse TransfersRuble(string fromPrivateKey, string toPublicKey,double amount)
+        {
+            return SendRequest<TransfersRubleRequest, TransfersRubleResponse>(new TransfersRubleRequest(fromPrivateKey, toPublicKey, amount), $"v1/transfers/ruble", HttpMethod.Post);
+        }
+        public TransfersMaticResponse TransfersMatic(string fromPrivateKey, string toPublicKey,double amount)
+        {
+            return SendRequest<TransfersMaticRequest, TransfersMaticResponse>(new TransfersMaticRequest(fromPrivateKey, toPublicKey, amount), $"v1/transfers/matic", HttpMethod.Post);
         }
     }
 }

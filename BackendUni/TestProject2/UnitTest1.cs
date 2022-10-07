@@ -35,5 +35,31 @@ namespace TestProject2
             }
             Assert.IsTrue(false);
         }
+
+        [Test]
+        public void Test3()
+        {
+            var res = WalletApi.TransfersRuble("6a9125ec2ac9bd4396faaa0dff1bfa57098352ee3a4734c7670a321e7f98a870", "0xca070fF6a7Bc1D60705e776100dca50Bba95AB50",10d);
+
+            if (!string.IsNullOrWhiteSpace(res.TransactionHash))
+            {
+                Assert.IsTrue(false);
+                return;
+            }
+            Assert.IsTrue(true);
+        }
+
+        [Test]
+        public void Test4()
+        {
+            var res = WalletApi.TransfersMatic("6a9125ec2ac9bd4396faaa0dff1bfa57098352ee3a4734c7670a321e7f98a870", "0xca070fF6a7Bc1D60705e776100dca50Bba95AB50", 0.005);
+
+            if (!string.IsNullOrWhiteSpace(res.TransactionHash))
+            {
+                Assert.IsTrue(false);
+                return;
+            }
+            Assert.IsTrue(true);
+        }
     }
 }

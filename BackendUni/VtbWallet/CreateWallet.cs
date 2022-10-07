@@ -19,14 +19,41 @@ namespace VtbWallet
 
         public static Wallet GetBalance(string publicKey)
         {
-            var balance = WalletHelper.GetBalance(publicKey);
-            return new Wallet() { MaticAmount = balance.MaticAmount, CoinsAmount = balance.CoinsAmount };
+            var result = WalletHelper.GetBalance(publicKey);
+            return new Wallet() { MaticAmount = result.MaticAmount, CoinsAmount = result.CoinsAmount };
         }
 
         public static Wallet GetBalance(Wallet wallet)
         {
-            var balance = WalletHelper.GetBalance(wallet.PublicKey);
-            return new Wallet() { MaticAmount = balance.MaticAmount, CoinsAmount = balance.CoinsAmount };
+            var result = WalletHelper.GetBalance(wallet.PublicKey);
+            return new Wallet() { MaticAmount = result.MaticAmount, CoinsAmount = result.CoinsAmount };
         }
+
+        public static TransactionCustom TransfersRuble(string fromPrivateKey, string toPublicKey,double amount)
+        {
+            var result = WalletHelper.TransfersRuble(fromPrivateKey, toPublicKey, amount);
+            return new TransactionCustom() { TransactionHash = result.TransactionHash};
+        }
+
+        public static TransactionCustom TransfersRuble(Wallet walletFrom, Wallet walletTo, double amount)
+        {
+            var result = WalletHelper.TransfersRuble(walletFrom.PrivateKey, walletTo.PublicKey, amount);
+            return new TransactionCustom() { TransactionHash = result.TransactionHash };
+        }
+
+
+        public static TransactionCustom TransfersMatic(string fromPrivateKey, string toPublicKey, double amount)
+        {
+            var result = WalletHelper.TransfersMatic(fromPrivateKey, toPublicKey, amount);
+            return new TransactionCustom() { TransactionHash = result.TransactionHash };
+        }
+
+        public static TransactionCustom TransfersMatic(Wallet walletFrom, Wallet walletTo, double amount)
+        {
+            var result = WalletHelper.TransfersRuble(walletFrom.PrivateKey, walletTo.PublicKey, amount);
+            return new TransactionCustom() { TransactionHash = result.TransactionHash };
+        }
+
+
     }
 }
