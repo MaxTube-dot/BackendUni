@@ -10,12 +10,14 @@ namespace VtbWallet.Models.Responses
     public class GetHistoryResponse
     {
         [JsonProperty("history")]
-        public History History { get; set; }
+        public List<History> Histories { get; set; }
 
     }
 
     public class History
     {
+        public bool IsNFT { get { return TokenId > 0; } }
+
         [JsonProperty("blockNumber")]
         public int BlockNumber { get; set; }
 

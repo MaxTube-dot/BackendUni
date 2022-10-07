@@ -90,9 +90,9 @@ namespace VtbWallet.Helpers
             return SendRequest<TransfersMaticRequest, TransfersMaticResponse>(new TransfersMaticRequest(fromPrivateKey, toPublicKey, amount), $"v1/transfers/matic", HttpMethod.Post);
         }
 
-        //public GetHistoryResponse GetHistory(string publicKey,int page, int offset,string sort)
-        //{
-        //    return SendRequest<GetHistoryRequest, GetHistoryResponse>(new GetHistoryRequest(page, offset, sort), $"/v1/wallets/{publicKey}/history", HttpMethod.Post);
-        //}
+        public GetHistoryResponse GetHistory(string publicKey, int page, int offset, string sort)
+        {
+            return SendRequest<GetHistoryRequest, GetHistoryResponse>(new GetHistoryRequest(page, offset, sort), $"v1/wallets/{publicKey}/history", HttpMethod.Post);
+        }
     }
 }

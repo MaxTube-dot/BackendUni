@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VtbWallet.Helpers;
 using VtbWallet.Models;
+using VtbWallet.Models.Responses;
 
 namespace VtbWallet
 {
@@ -56,18 +57,18 @@ namespace VtbWallet
         }
 
 
-        //public static TransactionCustom GetHistory(string publicKey,int page, int offset,string sort = "asc")
-        //{
-        //    var result = WalletHelper.GetHistory(publicKey, page, offset, sort);
-        //    return new TransactionCustom() { TransactionHash = result.TransactionHash };
-        //}
+        public static List<History> GetHistory(string publicKey, int page = 0, int offset = 0, string sort = "asc")
+        {
+            var result = WalletHelper.GetHistory(publicKey, page, offset, sort).Histories;
+            return result;
+        }
 
-        //public static TransactionCustom GetHistory(Wallet wallet, int page = 0, int offset = 0, string sort = "asc")
-        //{
-        //    var result = WalletHelper.GetHistory(wallet.PublicKey, page, offset, sort);
-        //    return new TransactionCustom() { TransactionHash = result.TransactionHash };
-        //}
-        
+        public static List<History> GetHistory(Wallet wallet, int page = 0, int offset = 0, string sort = "asc")
+        {
+            var result = WalletHelper.GetHistory(wallet.PublicKey, page, offset, sort).Histories;
+            return result;
+        }
+
 
 
     }
