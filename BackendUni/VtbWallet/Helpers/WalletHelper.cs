@@ -84,9 +84,15 @@ namespace VtbWallet.Helpers
         {
             return SendRequest<TransfersRubleRequest, TransfersRubleResponse>(new TransfersRubleRequest(fromPrivateKey, toPublicKey, amount), $"v1/transfers/ruble", HttpMethod.Post);
         }
-        public TransfersMaticResponse TransfersMatic(string fromPrivateKey, string toPublicKey,double amount)
+
+        public TransfersMaticResponse TransfersMatic(string fromPrivateKey, string toPublicKey, double amount)
         {
             return SendRequest<TransfersMaticRequest, TransfersMaticResponse>(new TransfersMaticRequest(fromPrivateKey, toPublicKey, amount), $"v1/transfers/matic", HttpMethod.Post);
         }
+
+        //public GetHistoryResponse GetHistory(string publicKey,int page, int offset,string sort)
+        //{
+        //    return SendRequest<GetHistoryRequest, GetHistoryResponse>(new GetHistoryRequest(page, offset, sort), $"/v1/wallets/{publicKey}/history", HttpMethod.Post);
+        //}
     }
 }
