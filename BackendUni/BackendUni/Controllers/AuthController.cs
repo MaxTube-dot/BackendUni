@@ -25,7 +25,11 @@ namespace BackendUni.Controllers
                 user.Token = guid;
                 _db.SaveChanges();
 
-                return Json(guid);
+                return Json(new 
+                { 
+                    Guid = guid, 
+                    User = user
+                } );
             }
         }
     }

@@ -30,5 +30,10 @@ namespace Backend.DAL.Models
         public DateTime End { get; set; }
 
         public int Price { get; set; }
+
+        /// <summary>
+        /// Является ли задача мероприятием
+        /// </summary>
+        public bool IsAnnouncement { get; set; }
     }
 }
