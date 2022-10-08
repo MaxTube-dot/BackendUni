@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Backend.DAL\Backend.DAL.csproj" />
+    <ProjectReference Include="..\VtbWallet\VtbWallet.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
 using Backend.DAL.DbContexts;
 using BackendUni.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VtbWallet;
 using VtbWallet.Models;
+using BackendUni.Services;
 
 namespace TestProject2
 {
@@ -111,18 +113,26 @@ namespace TestProject2
         [Test]
         public  void TestAuth()
         {
+            
+            var context = GetDbContext();
+            AuthController authController = new AuthController(context);
+            JsonResult result = (JsonResult)authController.Login("ilya", "0000");
+            Assert.IsTrue(result.Value != null);
+
+        }
+
+
+        private GamificationDbContext GetDbContext()
+        {
             string confString = "Host=192.168.1.4;Port=5432;Database=GamificationDB;Username=postgres;Password=110011";
 
             var optionBuilder = new DbContextOptionsBuilder<GamificationDbContext>();
             optionBuilder.UseNpgsql(confString);
             var context = new GamificationDbContext(optionBuilder.Options);
 
-            AuthController authController = new AuthController(context);
-
-            dynamic result = authController.Login("ilya", "0000");
-            string token = result.Value;
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
-
+            return context;
         }
+
+        
     }
 }
