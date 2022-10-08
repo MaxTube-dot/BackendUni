@@ -91,7 +91,16 @@ namespace TestProject2
         public void Test8()
         {
             var res = new Wallet("0xc732096eC1278f9B5DaAFf3621535fD623E931dd");
-            Assert.IsTrue(true);
+            Assert.IsTrue(res.Histories.Count > 1);
+        }
+
+
+
+        [Test]
+        public void Test9()
+        {
+            var res =  WalletApi.GetNftInfo(563);
+            Assert.IsTrue(res.Uri == "81933ff2-cef0-45b9-b691-07a1e5901915");
         }
     }
 }

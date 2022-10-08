@@ -117,12 +117,11 @@ namespace VtbWallet
 
 
 
-        //public static NftInfo GetNftInfo(string tokenId)
-        //{
-        //    var result = WalletHelper.GetNftInfo(tokenId);
-        //    wallet.NFTs = result.Balance;
-        //    return wallet;
-        //}
+        public static NftInfo GetNftInfo(int tokenId)
+        {
+            var result = WalletHelper.GetNftInfo(tokenId);
+            return result;
+        }
 
     }
 }

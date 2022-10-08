@@ -8,6 +8,7 @@ using VtbWallet.Models.Requests;
 using VtbWallet.Models.Responses;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Mime;
+using VtbWallet.Models;
 
 namespace VtbWallet.Helpers
 {
@@ -103,6 +104,12 @@ namespace VtbWallet.Helpers
         public GetNftBalanceResponse GetNftBalance(string publicKey)
         {
             return SendRequest<GetNftBalanceRequest, GetNftBalanceResponse>(new GetNftBalanceRequest(), $"v1/wallets/{publicKey}/nft/Balance", HttpMethod.Get);
+        }
+
+        
+        public NftInfo GetNftInfo(int tokenId)
+        {
+            return SendRequest<GetNftInfoRequest, NftInfo>(new GetNftInfoRequest(), $"v1/nft/{tokenId}", HttpMethod.Get);
         }
     }
 }
