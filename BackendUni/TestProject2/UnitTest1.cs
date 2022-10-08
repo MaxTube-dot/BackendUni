@@ -1,4 +1,5 @@
 using VtbWallet;
+using VtbWallet.Models;
 
 namespace TestProject2
 {
@@ -76,6 +77,21 @@ namespace TestProject2
         {
             var res = WalletApi.GenerateNFT("0xc732096eC1278f9B5DaAFf3621535fD623E931dd", Guid.NewGuid().ToString(), 2);
             Assert.IsTrue(!string.IsNullOrWhiteSpace(res.TransactionHash));
+        }
+
+
+        [Test]
+        public void Test7()
+        {
+            var res = WalletApi.GetNftBalance("0xc732096eC1278f9B5DaAFf3621535fD623E931dd");
+            Assert.IsTrue((res.Count > 0));
+        }
+
+        [Test]
+        public void Test8()
+        {
+            var res = new Wallet("0xc732096eC1278f9B5DaAFf3621535fD623E931dd");
+            Assert.IsTrue(true);
         }
     }
 }

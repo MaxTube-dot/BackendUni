@@ -77,7 +77,7 @@ namespace VtbWallet.Helpers
 
         public GetBalanceResponse GetBalance(string publicKey)
         {
-            return SendRequest<GetBalanceRequest, GetBalanceResponse>(new GetBalanceRequest(), $"v1/wallets/{publicKey}/balance", HttpMethod.Get);
+            return SendRequest<GetBalanceRequest, GetBalanceResponse>(new GetBalanceRequest(), $"v1/wallets/{publicKey}/Balance", HttpMethod.Get);
         }     
         
         public TransfersRubleResponse TransfersRuble(string fromPrivateKey, string toPublicKey,double amount)
@@ -98,6 +98,11 @@ namespace VtbWallet.Helpers
         public GenerateNFTResponse GenerateNFT(string publicKey, string uri, int nftCount)
         {
             return SendRequest<GenerateNFTRequest, GenerateNFTResponse>(new GenerateNFTRequest(publicKey, uri, nftCount), $"v1/nft/generate", HttpMethod.Post);
+        }
+
+        public GetNftBalanceResponse GetNftBalance(string publicKey)
+        {
+            return SendRequest<GetNftBalanceRequest, GetNftBalanceResponse>(new GetNftBalanceRequest(), $"v1/wallets/{publicKey}/nft/Balance", HttpMethod.Get);
         }
     }
 }

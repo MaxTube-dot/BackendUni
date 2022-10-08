@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace VtbWallet
             return new Wallet() { PrivateKey = keys.PrivateKey, PublicKey = keys.PublicKey };
         }
 
+
+
         public static Wallet GetBalance(string publicKey)
         {
             var result = WalletHelper.GetBalance(publicKey);
@@ -33,6 +36,9 @@ namespace VtbWallet
             return wallet;
         }
 
+
+
+
         public static TransactionCustom TransfersRuble(string fromPrivateKey, string toPublicKey,double amount)
         {
             var result = WalletHelper.TransfersRuble(fromPrivateKey, toPublicKey, amount);
@@ -44,6 +50,9 @@ namespace VtbWallet
             var result = WalletHelper.TransfersRuble(walletFrom.PrivateKey, walletTo.PublicKey, amount);
             return new TransactionCustom() { TransactionHash = result.TransactionHash };
         }
+
+
+
 
 
         public static TransactionCustom TransfersMatic(string fromPrivateKey, string toPublicKey, double amount)
@@ -59,6 +68,8 @@ namespace VtbWallet
         }
 
 
+
+
         public static List<History> GetHistory(string publicKey, int page = 0, int offset = 0, string sort = "asc")
         {
             var result = WalletHelper.GetHistory(publicKey, page, offset, sort).Histories;
@@ -71,6 +82,9 @@ namespace VtbWallet
             wallet.Histories = result;
             return wallet;
         }
+
+
+
 
         public static TransactionCustom GenerateNFT(string publicKey, string uri, int nftCount)
         {
@@ -85,6 +99,30 @@ namespace VtbWallet
         }
 
 
+
+
+
+        public static List<NFT> GetNftBalance(string publicKey)
+        {
+            var result = WalletHelper.GetNftBalance(publicKey);
+            return result.Balance;
+        }
+
+        public static Wallet GetNftBalance(Wallet wallet)
+        {
+            var result = WalletHelper.GetNftBalance(wallet.PublicKey);
+            wallet.NFTs = result.Balance;
+            return wallet;
+        }
+
+
+
+        //public static NftInfo GetNftInfo(string tokenId)
+        //{
+        //    var result = WalletHelper.GetNftInfo(tokenId);
+        //    wallet.NFTs = result.Balance;
+        //    return wallet;
+        //}
 
     }
 }
