@@ -17,7 +17,11 @@ namespace BackendUni.Controllers
             var user = _db.Users.FirstOrDefault(x => x.Login == login && x.Password == password);
 
             if (user == null)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 return Json(user);
+            }
             else
             {
                 string guid = Guid.NewGuid().ToString();
@@ -25,11 +29,11 @@ namespace BackendUni.Controllers
                 user.Token = guid;
                 _db.SaveChanges();
 
-                return Json(new 
-                { 
-                    Guid = guid, 
+                return Json(new
+                {
+                    Guid = guid,
                     User = user
-                } );
+                });
             }
         }
     }
