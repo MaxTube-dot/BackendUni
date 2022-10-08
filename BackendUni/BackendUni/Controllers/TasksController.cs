@@ -24,7 +24,9 @@ namespace BackendUni.Controllers
 
         public IActionResult GetUserTasks(int userId, string token)
         {
-            User user = _db.Users.Include(x => x.Tasks).FirstOrDefault(x => x.Id == userId);
+            User user = _db.Users.Include(x => x.Tasks)
+                .ThenInclude(x => x.Marks)
+                .FirstOrDefault(x => x.Id == userId);
 
             if (user == null || user.Token != token)
                 return Json(null);
@@ -54,6 +56,8 @@ namespace BackendUni.Controllers
         {
             return Json(_db.Tasks.Where(x => x.IsAnnouncement).ToArray(), _options);
         }
+
+
 
         public IActionResult Like(int taskId, string token)
         {
