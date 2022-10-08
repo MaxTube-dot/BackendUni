@@ -3,6 +3,8 @@ using Backend.DAL.Models;
 using BackendUni.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography.X509Certificates;
 using VtbWallet.Models;
 
 namespace BackendUni.Controllers
@@ -91,7 +93,45 @@ namespace BackendUni.Controllers
             _db.SaveChanges();
 
             return Json("Ok");
+        }
 
+        public IActionResult GetHistory (string token)
+        {
+            User user = _db.Users.Where(x => x.Token == token).FirstOrDefault();
+
+            if (user == null)
+                throw new Exception("Некорректный токен авторизации!");
+
+            if (string.IsNullOrWhiteSpace(user.PublicKey) || string.IsNullOrWhiteSpace(user.PrivateKey))
+            {
+                throw new Exception("Кошелек не создан или создан некорректно, обратитесь пожалуйста к администратору!");
+            }
+
+            var history = _wallet.GetHistory(user.PublicKey)
+                .Select(o =>
+                new
+                {
+                    BlockNumber = o.BlockNumber,
+                    TokenName = o.TokenName,
+                    From = o.From,
+                    FromName = Deanonimize(o.From),
+                    To = o.To,
+                    ToName = Deanonimize(o.To),
+                    value = o.Value
+                }).ToList();
+
+            return Json(history);
+        }
+
+        public string Deanonimize(string publicKey)
+        {
+            User user = _db.Users.Where(x => x.PublicKey.ToLower() == publicKey.ToLower()).FirstOrDefault();
+            if (user != null )
+            {
+                return user.Name;
+            }
+
+            return null;
         }
 
 

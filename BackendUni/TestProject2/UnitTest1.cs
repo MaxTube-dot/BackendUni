@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using VtbWallet;
 using VtbWallet.Models;
 using BackendUni.Services;
+using VtbWallet.Models.Responses;
 
 namespace TestProject2
 {
@@ -119,6 +120,16 @@ namespace TestProject2
             JsonResult result = (JsonResult)authController.Login("ilya", "0000");
             Assert.IsTrue(result.Value != null);
 
+        }
+
+        [Test]
+        public void GetHistory()
+        {
+            GamificationDbContext gamificationDbContext = GetDbContext();
+            string token  = gamificationDbContext.Users.Where(x => x.Id == 32).Select(x=>x.Token).FirstOrDefault();
+            UsersController authController = new UsersController(GetDbContext(), new WalletService());
+            var h = authController.GetHistory(token);
+            Assert.IsTrue(true);
         }
 
 
