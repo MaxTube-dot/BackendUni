@@ -53,7 +53,7 @@ namespace BackendUni.Controllers
 
         public IActionResult GetAllTasks()
         {
-            return Json(_db.Tasks.Where(x => !x.IsAnnouncement).ToArray(), _options);
+            return Json(_db.Tasks.Include(x => x.Marks).Where(x => !x.IsAnnouncement).ToArray(), _options);
         }
 
         public IActionResult GetAllAnnouncement()
