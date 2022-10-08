@@ -1,5 +1,6 @@
 using Backend.DAL.DbContexts;
 using BackendUni.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VtbWallet;
 using VtbWallet.Models;
@@ -115,56 +116,10 @@ namespace TestProject2
             
             var context = GetDbContext();
             AuthController authController = new AuthController(context);
-            dynamic result = authController.Login("ilya", "0000");
-            string token = result.Value;
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
+            JsonResult result = (JsonResult)authController.Login("ilya", "0000");
+            Assert.IsTrue(result.Value != null);
 
         }
-
-        [Test]
-        public void TestCreateVallet()
-        {
-            var context = GetDbContext();
-            AuthController authController = new AuthController(context);
-            dynamic result = authController.Login("ilya", "0000");
-            string token = result.Value;
-
-
-            UsersController controller = new UsersController(context, new WalletService());
-            try
-            {
-                dynamic let = controller.CreateWallet(token);
-            }
-            catch (Exception ex)
-            {
-                Assert.That(ex.Message, Does.Contain("уже создан"));
-                return;
-            }
-            Assert.That(false, Is.True);
-
-        }
-
-
-        [Test]
-        public void TestGetBalance()
-        {
-            var context = GetDbContext();
-            AuthController authController = new AuthController(context);
-            dynamic result = authController.Login("ilya", "0000");
-            string token = result.Value;
-
-
-            UsersController controller = new UsersController(context, new WalletService());
-            dynamic balance = controller.GetBalance(token);
-            dynamic balanceValue = balance.Value;
-     
-            Assert.IsNotNull(balanceValue);
-        }
-
-
-
-
-
 
 
         private GamificationDbContext GetDbContext()
