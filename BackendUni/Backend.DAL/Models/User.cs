@@ -22,6 +22,7 @@ namespace Backend.DAL.Models
 
         public List<Task> Tasks { get; set; }
 
+        [JsonIgnore]
         public List<Questionnaire> Questionnaires { get; set; }
 
         public List<Task> CreatedTasks { get; set; }

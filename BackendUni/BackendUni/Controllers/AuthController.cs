@@ -1,5 +1,6 @@
 ﻿using Backend.DAL.DbContexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackendUni.Controllers
 {
@@ -14,7 +15,7 @@ namespace BackendUni.Controllers
 
         public IActionResult Login(string login, string password)
         {
-            var user = _db.Users.FirstOrDefault(x => x.Login == login && x.Password == password);
+            var user = _db.Users.Include(x => x.Role).FirstOrDefault(x => x.Login == login && x.Password == password);
 
             if (user == null)
             {
