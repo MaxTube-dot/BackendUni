@@ -3,6 +3,7 @@ using BackendUni.Controllers;
 using Microsoft.EntityFrameworkCore;
 using VtbWallet;
 using VtbWallet.Models;
+using BackendUni.Services;
 
 namespace TestProject2
 {
@@ -111,18 +112,72 @@ namespace TestProject2
         [Test]
         public  void TestAuth()
         {
+            
+            var context = GetDbContext();
+            AuthController authController = new AuthController(context);
+            dynamic result = authController.Login("ilya", "0000");
+            string token = result.Value;
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
+
+        }
+
+        [Test]
+        public void TestCreateVallet()
+        {
+            var context = GetDbContext();
+            AuthController authController = new AuthController(context);
+            dynamic result = authController.Login("ilya", "0000");
+            string token = result.Value;
+
+
+            UsersController controller = new UsersController(context, new WalletService());
+            try
+            {
+                dynamic let = controller.CreateWallet(token);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Does.Contain("уже создан"));
+                return;
+            }
+            Assert.That(false, Is.True);
+
+        }
+
+
+        [Test]
+        public void TestGetBalance()
+        {
+            var context = GetDbContext();
+            AuthController authController = new AuthController(context);
+            dynamic result = authController.Login("ilya", "0000");
+            string token = result.Value;
+
+
+            UsersController controller = new UsersController(context, new WalletService());
+            dynamic balance = controller.GetBalance(token);
+            dynamic balanceValue = balance.Value;
+     
+            Assert.IsNotNull(balanceValue);
+        }
+
+
+
+
+
+
+
+        private GamificationDbContext GetDbContext()
+        {
             string confString = "Host=192.168.1.4;Port=5432;Database=GamificationDB;Username=postgres;Password=110011";
 
             var optionBuilder = new DbContextOptionsBuilder<GamificationDbContext>();
             optionBuilder.UseNpgsql(confString);
             var context = new GamificationDbContext(optionBuilder.Options);
 
-            AuthController authController = new AuthController(context);
-
-            dynamic result = authController.Login("ilya", "0000");
-            string token = result.Value;
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
-
+            return context;
         }
+
+        
     }
 }
