@@ -1,3 +1,6 @@
+using Backend.DAL.DbContexts;
+using BackendUni.Controllers;
+using Microsoft.EntityFrameworkCore;
 using VtbWallet;
 using VtbWallet.Models;
 
@@ -101,6 +104,25 @@ namespace TestProject2
         {
             var res =  WalletApi.GetNftInfo(563);
             Assert.IsTrue(res.Uri == "81933ff2-cef0-45b9-b691-07a1e5901915");
+        }
+
+
+
+        [Test]
+        public  void TestAuth()
+        {
+            string confString = "Host=192.168.1.4;Port=5432;Database=GamificationDB;Username=postgres;Password=110011";
+
+            var optionBuilder = new DbContextOptionsBuilder<GamificationDbContext>();
+            optionBuilder.UseNpgsql(confString);
+            var context = new GamificationDbContext(optionBuilder.Options);
+
+            AuthController authController = new AuthController(context);
+
+            dynamic result = authController.Login("ilya", "0000");
+            string token = result.Value;
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
+
         }
     }
 }
