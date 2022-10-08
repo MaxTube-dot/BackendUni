@@ -1,5 +1,6 @@
 ﻿using Backend.DAL.DbContexts;
 using Backend.DAL.Models;
+using BackendUni.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendUni.Controllers
@@ -7,10 +8,12 @@ namespace BackendUni.Controllers
     public class ShopController : Controller
     {
         private readonly GamificationDbContext _db;
+        private readonly WalletService _wallet;
 
-        public ShopController(GamificationDbContext db)
+        public ShopController(GamificationDbContext db, WalletService wallet)
         {
             _db = db;
+            _wallet = wallet;
         }
 
         public IActionResult GetAllProducts()
@@ -40,7 +43,8 @@ namespace BackendUni.Controllers
 
             _db.SaveChanges();
 
-            return Json("OK");
+
+            return Json(_wallet.RemoveTokens(user.PrivateKey, product.Price));
         }
     }
 }

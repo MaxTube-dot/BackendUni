@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Task = Backend.DAL.Models.Task;
 
 namespace BackendUni.Controllers
 {
@@ -38,7 +39,8 @@ namespace BackendUni.Controllers
                     Marks = x.Marks,
                     Start = x.Start,
                     End = x.End,
-                    Price = x.Price
+                    Price = x.Price,
+                    IsLiked = _db.Likes.Any(like => like.Task.Id == x.Id && like.User == user)
                 }), _options);
             }
         }
@@ -53,9 +55,38 @@ namespace BackendUni.Controllers
             return Json(_db.Tasks.Where(x => x.IsAnnouncement).ToArray(), _options);
         }
 
-        public IActionResult Like(int taskId)
+        public IActionResult Like(int taskId, string token)
         {
-            return null;
+            User user = _db.Users.Include(x => x.Tasks).FirstOrDefault(x => x.Token == token);
+            Task task = _db.Tasks.FirstOrDefault(x => x.Id == taskId);
+
+            if (user == null || task == null)
+                return Json(null);
+            else
+            {
+                _db.Likes.Add(new Like()
+                {
+                    Task = task,
+                    User = user
+                });
+
+                _db.SaveChanges();
+
+                return Json(new
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Created = task.Created,
+                    ImageLink = task.ImageLink,
+                    Marks = task.Marks,
+                    Start = task.Start,
+                    End = task.End,
+                    Price = task.Price,
+                    IsLiked = _db.Likes.Any(like => like.Task.Id == task.Id && like.User == user)
+                });
+            }
+
+            
         }
     }
 }

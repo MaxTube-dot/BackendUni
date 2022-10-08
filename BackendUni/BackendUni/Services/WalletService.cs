@@ -27,6 +27,11 @@ namespace BackendUni.Services
             return WalletApi.TransfersRuble(privateKeyFrom, publicKeyTo, count);
         }
 
+        public TransactionCustom RemoveTokens(string privateKeyFrom, double count )
+        {
+            return WalletApi.TransfersRuble(privateKeyFrom, "0xEFD60fC339921FD27E1056a5c245aE260e3096E5", count);
+        }
+
 
     }
 }
