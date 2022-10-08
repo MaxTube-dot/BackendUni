@@ -29,11 +29,15 @@ namespace BackendUni.Controllers
                 .FirstOrDefault(x => x.Id == userId);
 
             if (user == null || user.Token != token)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 return Json(null);
+            }
             else
             {
-                return Json(user.Tasks.Where(x => !x.IsAnnouncement).ToArray().Select(x => new 
-                { 
+                return Json(user.Tasks.Where(x => !x.IsAnnouncement).ToArray().Select(x => new
+                {
                     Id = x.Id,
                     Name = x.Name,
                     Created = x.Created,
@@ -65,7 +69,11 @@ namespace BackendUni.Controllers
             Task task = _db.Tasks.FirstOrDefault(x => x.Id == taskId);
 
             if (user == null || task == null)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 return Json(null);
+            }
             else
             {
                 _db.Likes.Add(new Like()
