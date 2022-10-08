@@ -31,6 +31,8 @@ namespace Backend.DAL.DbContexts
 
         public GamificationDbContext(DbContextOptions<GamificationDbContext> options) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             Database.EnsureCreated();
         }
 

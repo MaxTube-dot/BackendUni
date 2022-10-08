@@ -18,20 +18,29 @@ namespace BackendUni.Controllers
             return Json(_db.Products.ToArray());
         }
 
-        /*public IActionResult Buy(string token, int productId)
+        public IActionResult Buy(string token, int productId)
         {
             var product = _db.Products.FirstOrDefault(x => x.Id == productId);
 
             var user = _db.Users.FirstOrDefault(x => x.Token == token);
 
-            if (product == null || user == null)
+            if(user == null || product == null)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 return Json(null);
+            }
 
             _db.CartItems.Add(new CartItem()
             {
                 Product = product,
-                 User
+                User = user,
+                AddDate = DateTime.Now,
             });
-        }*/
+
+            _db.SaveChanges();
+
+            return Json("OK");
+        }
     }
 }
