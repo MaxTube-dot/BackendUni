@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace Backend.DAL.Models
 {
-    public class Mark
+    public class GameRole
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public string ImageLink { get; set; }
-
-        public List<Task> Tasks { get; set; }
-
-        public List<GameRole> GameRoles { get; set; }
+        public List<Mark> Marks { get; set; }
     }
 }

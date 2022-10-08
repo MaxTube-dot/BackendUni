@@ -17,6 +17,8 @@ namespace Backend.DAL.DbContexts
 
         public DbSet<CompletedTask> CompletedTasks { get; set; }
 
+        public DbSet<GameRole> GameRoles { get; set; }
+
         public GamificationDbContext(DbContextOptions<GamificationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
