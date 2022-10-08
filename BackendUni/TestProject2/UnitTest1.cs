@@ -48,7 +48,7 @@ namespace TestProject2
         {
             var res = WalletApi.TransfersRuble("6a9125ec2ac9bd4396faaa0dff1bfa57098352ee3a4734c7670a321e7f98a870", "0xca070fF6a7Bc1D60705e776100dca50Bba95AB50",0.05d);
 
-            if (!string.IsNullOrWhiteSpace(res.TransactionHash))
+            if (string.IsNullOrWhiteSpace(res.TransactionHash))
             {
                 Assert.IsTrue(false);
                 return;
@@ -129,6 +129,17 @@ namespace TestProject2
             string token  = gamificationDbContext.Users.Where(x => x.Id == 32).Select(x=>x.Token).FirstOrDefault();
             UsersController authController = new UsersController(GetDbContext(), new WalletService());
             var h = authController.GetHistory(token);
+            Assert.IsTrue(true);
+        }
+
+
+        [Test]
+        public void Transfer()
+        {
+            GamificationDbContext gamificationDbContext = GetDbContext();
+            string token = gamificationDbContext.Users.Where(x => x.Id == 32).Select(x => x.Token).FirstOrDefault();
+            UsersController authController = new UsersController(GetDbContext(), new WalletService());
+            var h = authController.Transfer(token,31,1 );
             Assert.IsTrue(true);
         }
 

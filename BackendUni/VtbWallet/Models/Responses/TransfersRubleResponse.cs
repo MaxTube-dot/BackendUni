@@ -9,7 +9,7 @@ namespace VtbWallet.Models.Responses
 {
     public class TransfersRubleResponse
     {
-        [JsonProperty("transactionHash")]
+        [JsonProperty("transaction")]
         public string TransactionHash { get; set; }
 
     }

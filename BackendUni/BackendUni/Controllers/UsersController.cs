@@ -135,6 +135,47 @@ namespace BackendUni.Controllers
         }
 
 
+        public IActionResult Transfer(string token, int UserTo, double count)
+        {
+            User userFrom = _db.Users.Where(x => x.Token == token).FirstOrDefault();
+
+            if (userFrom == null)
+                throw new Exception("Некорректный токен авторизации!");
+
+            if (string.IsNullOrWhiteSpace(userFrom.PrivateKey))
+            {
+                throw new Exception("Кошелек отправителя не найден!");
+            }
+
+            User userTo = _db.Users.Where(x => x.Id == UserTo).FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(userFrom.PublicKey))
+            {
+                throw new Exception("Кошелек отправителя не найден!");
+            }
+
+            var transaction = _wallet.SentTokens(userFrom.PrivateKey, userTo.PublicKey, count);
+
+
+            return Json(transaction);
+        }
+
+        public IActionResult RemoveTokens(string token, double count)
+        {
+            User userFrom = _db.Users.Where(x => x.Token == token).FirstOrDefault();
+
+            if (userFrom == null)
+                throw new Exception("Некорректный токен авторизации!");
+
+            if (string.IsNullOrWhiteSpace(userFrom.PrivateKey))
+            {
+                throw new Exception("Кошелек отправителя не найден!");
+            }
+            
+            var transaction = _wallet.SentTokens(userFrom.PrivateKey, "0xEFD60fC339921FD27E1056a5c245aE260e3096E5", count);
+            return Json(transaction);
+        }
+
+
 
     }
 }

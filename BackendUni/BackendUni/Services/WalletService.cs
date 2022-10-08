@@ -1,4 +1,5 @@
-﻿using VtbWallet;
+﻿using System.Runtime.CompilerServices;
+using VtbWallet;
 using VtbWallet.Models;
 using VtbWallet.Models.Responses;
 
@@ -20,5 +21,12 @@ namespace BackendUni.Services
         {
             return WalletApi.GetHistory(publicKey);
         }
+
+        public TransactionCustom SentTokens(string privateKeyFrom, string publicKeyTo, double count )
+        {
+            return WalletApi.TransfersRuble(privateKeyFrom, publicKeyTo, count);
+        }
+
+
     }
 }
