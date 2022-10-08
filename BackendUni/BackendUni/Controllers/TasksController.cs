@@ -29,7 +29,17 @@ namespace BackendUni.Controllers
                 return Json(null);
             else
             {
-                return Json(user.Tasks.ToArray(), _options);
+                return Json(user.Tasks.Where(x => !x.IsAnnouncement).ToArray().Select(x => new 
+                { 
+                    Id = x.Id,
+                    Name = x.Name,
+                    Created = x.Created,
+                    ImageLink = x.ImageLink,
+                    Marks = x.Marks,
+                    Start = x.Start,
+                    End = x.End,
+                    Price = x.Price
+                }), _options);
             }
         }
 

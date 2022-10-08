@@ -34,6 +34,7 @@ namespace Backend.DAL.Models
         /// <summary>
         /// Является ли задача мероприятием
         /// </summary>
+        [JsonIgnore]
         public bool IsAnnouncement { get; set; }
     }
 }
