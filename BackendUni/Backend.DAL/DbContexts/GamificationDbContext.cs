@@ -19,6 +19,12 @@ namespace Backend.DAL.DbContexts
 
         public DbSet<GameRole> GameRoles { get; set; }
 
+        public DbSet<Questionnaire> Questionnaires { get; set; }
+
+        public DbSet<AnswerVariant> AnswerVariants { get; set; }
+
+        public DbSet<UsersQuestionnaireAnswers> UsersQuestionnaireAnswers { get; set; }
+
         public GamificationDbContext(DbContextOptions<GamificationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
