@@ -1,4 +1,5 @@
 using Backend.DAL.DbContexts;
+using BackendUni.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendUni
@@ -12,6 +13,7 @@ namespace BackendUni
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<GamificationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddTransient<WalletService, WalletService>();
 
             var app = builder.Build();
 
