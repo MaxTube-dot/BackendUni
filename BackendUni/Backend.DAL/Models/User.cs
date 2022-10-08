@@ -26,5 +26,11 @@ namespace Backend.DAL.Models
 
         [JsonIgnore]
         public string Token { get; set; }
+
+        [JsonIgnore]
+        public string PrivateKey { get; set; }
+
+        [JsonIgnore]
+        public string PublicKey { get; set; }
     }
 }

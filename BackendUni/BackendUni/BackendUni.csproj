@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Views\" />
+    <Folder Include="wwwroot\Новая папка\" />
   </ItemGroup>
 
   <ItemGroup>
