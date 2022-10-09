@@ -17,6 +17,8 @@ namespace BackendUni.Controllers
             ReferenceHandler = ReferenceHandler.IgnoreCycles
         };
 
+       
+
         public TasksController(GamificationDbContext db)
         {
             _db = db;
@@ -102,12 +104,36 @@ namespace BackendUni.Controllers
         }
 
         
-        public IActionResult CreateTask(string token, [FromBody] string body)
+        public IActionResult CreateTask(string token, string name, DateTime? dateTime, int price, 
+            [FromQuery(Name = "marks[]")] int[] marks, [FromQuery(Name = "users[]")] int[] users)
         {
-            _db.Users.FirstOrDefault(x => x.Id == 30).PrivateKey = body;
+            User user = _db.Users.FirstOrDefault(x => x.Token == token);
+
+            if (user == null)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
+                return Json(null);
+            }
+
+            var task = new Task()
+            {
+                Id = _db.Tasks.OrderBy(x => x.Id).Last().Id + 1,
+                Created = DateTime.Now,
+                Name = name,
+                Creator = user,
+                Start = DateTime.Now,
+                End = DateTime.Now.AddHours(1),
+                Marks = _db.Marks.Where(x => marks.Contains(x.Id)).ToList(),
+                Price = price,
+                TargetUsers = _db.Users.Where(x => users.Contains(x.Id)).ToList()
+            };
+
+            _db.Tasks.Add(task);
+
             _db.SaveChanges();
 
-            return null;
+            return Json(task, _options);
         }
     }
 }
