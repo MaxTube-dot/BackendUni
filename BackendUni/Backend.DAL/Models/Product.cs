@@ -17,5 +17,7 @@ namespace Backend.DAL.Models
         public int Price { get; set; }
 
         public string ImageLink { get; set; }
+
+        public string Description { get; set; }
     }
 }
