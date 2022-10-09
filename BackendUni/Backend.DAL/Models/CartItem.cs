@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Backend.DAL.Models
+﻿namespace Backend.DAL.Models
 {
+    /// <summary>
+    /// Сущность заказа в магазине.
+    /// </summary>
     public class CartItem
     {
         public int Id { get; set; }

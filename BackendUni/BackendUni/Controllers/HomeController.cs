@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendUni.Controllers
 {
+    /// <summary>
+    /// Контроллер по умолчанию
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly GamificationDbContext _db;
-
-
 
         public HomeController(GamificationDbContext db)
         {

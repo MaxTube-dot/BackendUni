@@ -8,6 +8,9 @@ using Task = Backend.DAL.Models.Task;
 
 namespace BackendUni.Controllers
 {
+    /// <summary>
+    /// Контроллер ивентов.
+    /// </summary>
     public class TasksController : Controller
     {
         private readonly GamificationDbContext _db;
@@ -17,13 +20,17 @@ namespace BackendUni.Controllers
             ReferenceHandler = ReferenceHandler.IgnoreCycles
         };
 
-       
-
         public TasksController(GamificationDbContext db)
         {
             _db = db;
         }
 
+        /// <summary>
+        /// Метод, возвращающий ивенты указанного пользователя
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <returns>Перечень ивентов пользователя</returns>
         public IActionResult GetUserTasks(int userId, string token)
         {
             User user = _db.Users.Include(x => x.Tasks)
@@ -53,18 +60,32 @@ namespace BackendUni.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Метод получения всех ивентов
+        /// </summary>
+        /// <returns>Перечень всех ивентов</returns>
         public IActionResult GetAllTasks()
         {
             return Json(_db.Tasks.Include(x => x.Marks).Where(x => !x.IsAnnouncement).ToArray(), _options);
         }
 
+        /// <summary>
+        /// Метод получения всех мероприятий
+        /// </summary>
+        /// <returns>Перечень мероприятий</returns>
         public IActionResult GetAllAnnouncement()
         {
             return Json(_db.Tasks.Where(x => x.IsAnnouncement).ToArray(), _options);
         }
 
 
-
+        /// <summary>
+        /// Метод для принятия ивента в процесс.
+        /// </summary>
+        /// <param name="taskId">Идентификатор ивента.</param>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <returns></returns>
         public IActionResult Like(int taskId, string token)
         {
             User user = _db.Users.Include(x => x.Tasks).FirstOrDefault(x => x.Token == token);
@@ -103,7 +124,16 @@ namespace BackendUni.Controllers
             
         }
 
-        
+        /// <summary>
+        /// Метод создания нового ивента
+        /// </summary>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <param name="name">Название ивента</param>
+        /// <param name="dateTime">Дата проведения ивента</param>
+        /// <param name="price">Баллы за выполнение</param>
+        /// <param name="marks">Метки ивента</param>
+        /// <param name="users">Целевые пользователи ивента</param>
+        /// <returns>Объект созданного ивента</returns>
         public IActionResult CreateTask(string token, string name, DateTime? dateTime, int price, 
             [FromQuery(Name = "marks[]")] int[] marks, [FromQuery(Name = "users[]")] int[] users)
         {

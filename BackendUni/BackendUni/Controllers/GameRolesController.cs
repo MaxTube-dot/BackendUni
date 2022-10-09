@@ -15,14 +15,7 @@ namespace BackendUni.Controllers
 
         public IActionResult GetUserGameRoles(int userId, string token)
         {
-            // TODO: формула подсчёта процентов
-
-            return Json(_db.GameRoles.ToArray().Select(x => new
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Percent = _random.Next(100)
-            }));
+            return Json(new NotImplementedException());
         }
     }
 }

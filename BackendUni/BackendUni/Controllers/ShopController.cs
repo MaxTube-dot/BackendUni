@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendUni.Controllers
 {
+    /// <summary>
+    /// Контроллер магазина мерча.
+    /// </summary>
     public class ShopController : Controller
     {
         private readonly GamificationDbContext _db;
@@ -16,11 +19,22 @@ namespace BackendUni.Controllers
             _wallet = wallet;
         }
 
+        /// <summary>
+        /// Метод, возвращающий список всех существующих товаров
+        /// </summary>
+        /// <returns>Массив товаров</returns>
         public IActionResult GetAllProducts()
         {
             return Json(_db.Products.ToArray());
         }
 
+
+        /// <summary>
+        /// Метод для покупки товара в магазине
+        /// </summary>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <param name="productId">Идентификатор покупаемого продукта</param>
+        /// <returns>Хэш транзакции</returns>
         public IActionResult Buy(string token, int productId)
         {
             var product = _db.Products.FirstOrDefault(x => x.Id == productId);

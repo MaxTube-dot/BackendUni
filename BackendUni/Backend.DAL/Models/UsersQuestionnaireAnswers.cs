@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Backend.DAL.Models
 {
+    /// <summary>
+    /// Сущность ответа пользователя на опрос.
+    /// </summary>
     public class UsersQuestionnaireAnswers
     {
         public int Id { get; set; }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Backend.DAL.Models
 {
+    /// <summary>
+    /// Сущность метки прокачиваемого скилла.
+    /// </summary>
     public class Mark
     {
         public int Id { get; set; }

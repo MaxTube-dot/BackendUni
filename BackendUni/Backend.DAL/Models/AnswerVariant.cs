@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Backend.DAL.Models
+﻿namespace Backend.DAL.Models
 {
+    /// <summary>
+    /// Сущность варианта ответа на опрос.
+    /// </summary>
     public class AnswerVariant
     {
         public int Id { get; set; }

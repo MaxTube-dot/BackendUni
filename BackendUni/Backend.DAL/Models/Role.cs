@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Backend.DAL.Models
+﻿namespace Backend.DAL.Models
 {
+    /// <summary>
+    /// Сущность роли аккаунта.
+    /// </summary>
     public class Role
     {
         public int Id { get; set; }

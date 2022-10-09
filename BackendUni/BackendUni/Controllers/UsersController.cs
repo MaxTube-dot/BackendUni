@@ -9,6 +9,9 @@ using VtbWallet.Models;
 
 namespace BackendUni.Controllers
 {
+    /// <summary>
+    /// Контроллер пользователя
+    /// </summary>
     public class UsersController : Controller
     {
         private readonly GamificationDbContext _db;
@@ -20,6 +23,11 @@ namespace BackendUni.Controllers
             _wallet = walletService;
         }
 
+        /// <summary>
+        /// Метод получения объекта пользователя по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор пользователя</param>
+        /// <returns>Объект пользователя</returns>
         public IActionResult GetUser(int id)
         {
             User user = _db.Users.Include(x => x.Role).FirstOrDefault(x => x.Id == id);
@@ -39,6 +47,10 @@ namespace BackendUni.Controllers
             }
         }
 
+        /// <summary>
+        /// Метод получения всех пользователей
+        /// </summary>
+        /// <returns>Все пользователи системы</returns>
         public IActionResult GetAllUsers()
         {
             User[] users = _db.Users.Include(x => x.Role).ToArray();
@@ -53,6 +65,12 @@ namespace BackendUni.Controllers
             }));
         }
 
+        /// <summary>
+        /// Метод получения баланса пользователя по его токену
+        /// </summary>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <returns>Баланс кошелька пользователя</returns>
+        /// <exception cref="Exception"></exception>
         public IActionResult GetBalance(string token)
         {
             User user = _db.Users.Where(x => x.Token == token).FirstOrDefault();
@@ -73,27 +91,12 @@ namespace BackendUni.Controllers
             });
         }
 
-
-        public IActionResult CreateWallet(string token)
-        {
-            User user = _db.Users.Where(x => x.Token == token).FirstOrDefault();
-
-            if (user == null)
-                throw new Exception("Некорректный токен авторизации!");
-
-            if (!string.IsNullOrWhiteSpace(user.PublicKey) || !string.IsNullOrWhiteSpace(user.PrivateKey))
-            {
-                throw new Exception("Кошелек уже создан!");
-            }
-
-            Wallet wallet = _wallet.CreateWallet();
-            user.PrivateKey = wallet.PrivateKey;
-            user.PublicKey = wallet.PublicKey;
-            _db.SaveChanges();
-
-            return Json("Ok");
-        }
-
+        /// <summary>
+        /// Метод получения истории транзакций
+        /// </summary>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <returns>История транзакций</returns>
+        /// <exception cref="Exception"></exception>
         public IActionResult GetHistory (string token)
         {
             User user = _db.Users.Where(x => x.Token == token).FirstOrDefault();
@@ -122,6 +125,12 @@ namespace BackendUni.Controllers
             return Json(history);
         }
 
+
+        /// <summary>
+        /// Метод получения пользователя по его публичному ключу
+        /// </summary>
+        /// <param name="publicKey">Публичный ключ пользователя</param>
+        /// <returns>Объект пользователя</returns>
         public string Deanonimize(string publicKey)
         {
             User user = _db.Users.Where(x => x.PublicKey.ToLower() == publicKey.ToLower()).FirstOrDefault();
@@ -133,7 +142,14 @@ namespace BackendUni.Controllers
             return null;
         }
 
-
+        /// <summary>
+        /// Метод перевода валюты другому пользователю
+        /// </summary>
+        /// <param name="token">Токен авторизированного пользователя.</param>
+        /// <param name="UserTo">Идентификатор конечного пользователя</param>
+        /// <param name="count">Количество монет для перевода</param>
+        /// <returns>Объект транзакции</returns>
+        /// <exception cref="Exception"></exception>
         public IActionResult Transfer(string token, int UserTo, double count)
         {
             User userFrom = _db.Users.Where(x => x.Token == token).FirstOrDefault();
@@ -158,6 +174,13 @@ namespace BackendUni.Controllers
             return Json(transaction);
         }
 
+        /// <summary>
+        /// Метод для удаления монет с кошелька пользователя
+        /// </summary>
+        /// <param name="token">Токен авторизованного пользователя</param>
+        /// <param name="count">Количество монет для удаления</param>
+        /// <returns>Объект транзакции</returns>
+        /// <exception cref="Exception"></exception>
         public IActionResult RemoveTokens(string token, double count)
         {
             User userFrom = _db.Users.Where(x => x.Token == token).FirstOrDefault();
