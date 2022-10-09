@@ -69,8 +69,7 @@ namespace BackendUni.Controllers
 
             return Json( new
             {
-                ruble = wallet.CoinsAmount,
-                matic = wallet.MaticAmount
+                ruble = wallet.CoinsAmount
             });
         }
 
