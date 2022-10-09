@@ -2,8 +2,10 @@
 
 namespace VtbWallet.Models
 {
+    // Информация о NFT
     public class NftInfo
     {
+        
         [JsonProperty("tokenId")]
         public string TokenId { get; set; }
 

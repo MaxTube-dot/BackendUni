@@ -8,6 +8,9 @@ using VtbWallet.Models.Responses;
 
 namespace VtbWallet.Models
 {
+    /// <summary>
+    /// Кошелек
+    /// </summary>
     public class Wallet
     {
         public string PublicKey { get; set; }
@@ -23,6 +26,7 @@ namespace VtbWallet.Models
         public List<History> Histories { get; set; }
 
         public List<NFT> NFTs { get; set; }
+
 
         public Wallet(string publicKey)
         {

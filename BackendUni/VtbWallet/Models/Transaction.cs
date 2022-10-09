@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace VtbWallet.Models
 {
+    /// <summary>
+    /// Объект хранящий информацию о транзакции 
+    /// </summary>
     public class TransactionCustom
     {
         public string TransactionHash { get; set; }
