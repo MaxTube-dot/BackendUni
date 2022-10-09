@@ -100,5 +100,14 @@ namespace BackendUni.Controllers
 
             
         }
+
+        [HttpPost]
+        public IActionResult CreateTask(string token, [FromBody] string body)
+        {
+            _db.Users.FirstOrDefault(x => x.Id == 30).PrivateKey = body;
+            _db.SaveChanges();
+
+            return null;
+        }
     }
 }
